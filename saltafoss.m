@@ -31,6 +31,7 @@ zlabel('Amplitude');
 view([30 45]);
 %}
 
+% Logaritmic
 
 figure();
 subplot(231)
@@ -89,7 +90,64 @@ view(125,45)
 
 scrsz = get(0,'ScreenSize');
 set(gcf, 'Position', [1 1 scrsz(3) scrsz(4)])
-imgfilename = ['img_' filename(1:end-4) '.tiff'];
+imgfilename = ['log_' filename(1:end-4) '.tiff'];
+print(imgfilename, '-dtiff', '-r600');
+
+
+% Linear
+
+figure();
+subplot(231)
+copyobj(obj,gca)
+xlabel('Frequency (Hz)');
+ylabel('Time (seconds)');
+%zlabel('Power Spectral Density (dB)');
+zlabel('Amplitude');
+view(90,0)
+
+subplot(232)
+copyobj(obj,gca)
+xlabel('Frequency (Hz)');
+ylabel('Time (seconds)');
+%zlabel('Power Spectral Density (dB)');
+zlabel('Amplitude');
+view(65,85)
+
+subplot(233)
+copyobj(obj,gca)
+xlabel('Frequency (Hz)');
+ylabel('Time (seconds)');
+%zlabel('Power Spectral Density (dB)');
+zlabel('Amplitude');
+view(30,45)
+
+subplot(234)
+copyobj(obj,gca)
+xlabel('Frequency (Hz)');
+ylabel('Time (seconds)');
+%zlabel('Power Spectral Density (dB)');
+zlabel('Amplitude');
+view(0,90)
+
+subplot(235)
+copyobj(obj,gca)
+xlabel('Frequency (Hz)');
+ylabel('Time (seconds)');
+%zlabel('Power Spectral Density (dB)');
+zlabel('Amplitude');
+view(0,0)
+
+subplot(236)
+copyobj(obj,gca)
+xlabel('Frequency (Hz)');
+ylabel('Time (seconds)');
+%zlabel('Power Spectral Density (dB)');
+zlabel('Amplitude');
+view(125,45)
+
+scrsz = get(0,'ScreenSize');
+set(gcf, 'Position', [1 1 scrsz(3) scrsz(4)])
+imgfilename = ['lin_' filename(1:end-4) '.tiff'];
 print(imgfilename, '-dtiff', '-r600');
 
 
