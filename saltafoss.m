@@ -22,14 +22,18 @@ a = sqrt(p.*f*3);
 %figure;
 %waterfall(f,t,10*log10(p.'));
 obj = waterfall(f,t,a.');
-%{
-set(gca,'XScale','log')
+%set(gca,'XScale','log')
 xlabel('Frequency (Hz)');
 ylabel('Time (seconds)');
 %zlabel('Power Spectral Density (dB)');
 zlabel('Amplitude');
-view([30 45]);
+view([40 30]);
 %}
+
+scrsz = get(0,'ScreenSize');
+set(gcf, 'Position', [1 1 scrsz(3) scrsz(4)])
+imgfilename = [filename(1:end-4) '_persp' '.tiff'];
+print(imgfilename, '-dtiff', '-r600');
 
 % Logaritmic
 
