@@ -1,11 +1,14 @@
-%% Waterfall Graph of an audio file, axis: frequency, amplitude and time
-
-
+%% Saltafoss
+% Desciption:   This code visualizes audio files in 3D graphs and saves a
+%               .till image
+% Author:       Jérôme Roy
+% Date:         25.01.23
+% Update:       08.02.23
 
 clc
 clear all
 
-[filename, pathname] = uigetfile('*.mp3');
+[filename, pathname] = uigetfile('*.wav'); %change the extension for other file formats
 fullpath = fullfile(pathname, filename);
 data = importdata(fullpath);
 
@@ -86,7 +89,8 @@ view(125,45)
 
 scrsz = get(0,'ScreenSize');
 set(gcf, 'Position', [1 1 scrsz(3) scrsz(4)])
-print('figure_full_screen_TEST', '-dtiff', '-r600');
+imgfilename = ['img_' filename(1:end-4) '.tiff'];
+print(imgfilename, '-dtiff', '-r600');
 
 
 
