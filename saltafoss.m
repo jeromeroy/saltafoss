@@ -8,7 +8,7 @@
 clc
 clear all
 
-[filename, pathname] = uigetfile('*.wav'); %change the extension for other file formats
+[filename, pathname] = uigetfile('*.mp3'); %change the extension for other file formats
 fullpath = fullfile(pathname, filename);
 data = importdata(fullpath);
 
@@ -50,7 +50,7 @@ xlabel('Frequency (Hz)');
 ylabel('Time (seconds)');
 %zlabel('Power Spectral Density (dB)');
 zlabel('Amplitude');
-view(65,85)
+view(-35,30)
 
 subplot(233)
 copyobj(obj,gca)
@@ -90,7 +90,7 @@ view(125,45)
 
 scrsz = get(0,'ScreenSize');
 set(gcf, 'Position', [1 1 scrsz(3) scrsz(4)])
-imgfilename = ['log_' filename(1:end-4) '.tiff'];
+imgfilename = [filename(1:end-4) '_log' '.tiff'];
 print(imgfilename, '-dtiff', '-r600');
 
 
@@ -111,7 +111,7 @@ xlabel('Frequency (Hz)');
 ylabel('Time (seconds)');
 %zlabel('Power Spectral Density (dB)');
 zlabel('Amplitude');
-view(65,85)
+view(-35,30)
 
 subplot(233)
 copyobj(obj,gca)
@@ -147,7 +147,7 @@ view(125,45)
 
 scrsz = get(0,'ScreenSize');
 set(gcf, 'Position', [1 1 scrsz(3) scrsz(4)])
-imgfilename = ['lin_' filename(1:end-4) '.tiff'];
+imgfilename = [filename(1:end-4) '_lin' '.tiff'];
 print(imgfilename, '-dtiff', '-r600');
 
 
