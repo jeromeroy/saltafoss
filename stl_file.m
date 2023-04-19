@@ -1,3 +1,9 @@
+%% Saltafoss
+% Desciption:   This code exports audio files in STL files using 3D graphs
+% Author:       Jérôme Roy
+% Date:         10.04.23
+% Update:       19.04.23
+
 clc
 clear all
 
