@@ -15,17 +15,24 @@ data = importdata(fullpath);
 
 y = mean(y,2); % convert stereo to mono
 [p,f,t] = pspectrum(y,Fs,'spectrogram');
-a = sqrt(p.*f*3)*1000;
+a = sqrt(p.*f*3);
+%select first 789 elements of a to make it in ratio 3/2
 
+%TODO: Remove ratio limiter of 526, instead divide highest value in freq by
+%highest value in time. to obtain a square. then rethink how to calibrate
+%in ratio 2/3
+ff = transpose(f(1:526))./48.9083; %789
+aa = a(1:526,:)*100;
+tt = transpose(t);
 
 % Write ascii STL from gridded data
 [X,Y] = deal(1:40);             % Create grid reference
 Z = peaks(40);                  % Create grid height
-stlwrite('test.stl',t,f,a,'mode','ascii')
+stlwrite('test.stl',tt,ff,aa,'mode','ascii')
 
 %% TEST STL
 
 % Write ascii STL from gridded data
-[X,Y] = deal(1:40);             % Create grid reference
-Z = peaks(40);                  % Create grid height
+[X,Y] = deal(1:10);             % Create grid reference
+Z = peaks(10);                  % Create grid height
 stlwrite('test.stl',X,Y,Z,'mode','ascii')
