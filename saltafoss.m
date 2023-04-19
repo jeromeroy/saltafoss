@@ -1,6 +1,6 @@
 %% Saltafoss
 % Desciption:   This code visualizes audio files in 3D graphs and saves a
-%               .till image
+%               .tiff image
 % Author:       Jérôme Roy
 % Date:         25.01.23
 % Update:       08.02.23
@@ -8,7 +8,7 @@
 clc
 clear all
 
-[filename, pathname] = uigetfile('*.mp3'); %change the extension for other file formats
+[filename, pathname] = uigetfile('*.*'); %change the extension for other file formats
 fullpath = fullfile(pathname, filename);
 data = importdata(fullpath);
 
@@ -17,6 +17,7 @@ data = importdata(fullpath);
 y = mean(y,2); % convert stereo to mono
 [p,f,t] = pspectrum(y,Fs,'spectrogram');
 a = sqrt(p.*f*3);
+
 
 
 %figure;
@@ -35,8 +36,9 @@ set(gcf, 'Position', [1 1 scrsz(3) scrsz(4)])
 imgfilename = [filename(1:end-4) '_persp' '.tiff'];
 print(imgfilename, '-dtiff', '-r600');
 
-% Logaritmic
 
+
+% Logaritmic
 figure();
 subplot(231)
 copyobj(obj,gca)
@@ -153,6 +155,8 @@ scrsz = get(0,'ScreenSize');
 set(gcf, 'Position', [1 1 scrsz(3) scrsz(4)])
 imgfilename = [filename(1:end-4) '_lin' '.tiff'];
 print(imgfilename, '-dtiff', '-r600');
+
+
 
 
 
