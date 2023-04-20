@@ -21,8 +21,10 @@ a = sqrt(p.*f*3);
 %TODO: Remove ratio limiter of 526, instead divide highest value in freq by
 %highest value in time. to obtain a square. then rethink how to calibrate
 %in ratio 2/3
-ff = transpose(f(1:526))./48.9083; %789
-aa = a(1:526,:)*100;
+x = (2/3)*(f(end)/t(end));
+
+ff = transpose(f)./x;
+aa = a*10;
 tt = transpose(t);
 
 % Write ascii STL from gridded data
