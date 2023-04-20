@@ -23,8 +23,8 @@ a = sqrt(p.*f*3);
 %in ratio 2/3
 x = (2/3)*(f(end)/t(end));
 
-ff = transpose(f)./x;
-aa = a*10;
+ff = transpose(f(1:950,:))./x;
+aa = a(1:950,:)*15;
 tt = transpose(t);
 
 % Write ascii STL from gridded data
@@ -35,6 +35,6 @@ stlwrite('test.stl',tt,ff,aa,'mode','ascii')
 %% TEST STL
 
 % Write ascii STL from gridded data
-[X,Y] = deal(1:10);             % Create grid reference
-Z = peaks(10);                  % Create grid height
+[X,Y] = deal(1:50);             % Create grid reference
+Z = peaks(50);                  % Create grid height
 stlwrite('test.stl',X,Y,Z,'mode','ascii')
