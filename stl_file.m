@@ -27,10 +27,16 @@ ff = transpose(f(1:950,:))./x;
 aa = a(1:950,:)*15;
 tt = transpose(t);
 
+% grab every 2nd element
+F = ff(:,1:5:end);
+A = aa(1:5:end,1:5:end);
+T = tt(:,1:5:end);
+
 % Write ascii STL from gridded data
-[X,Y] = deal(1:40);             % Create grid reference
-Z = peaks(40);                  % Create grid height
-stlwrite('test.stl',tt,ff,aa,'mode','ascii')
+%stlwrite('test.stl',tt,ff,aa,'mode','ascii')
+stlwrite('test_comp.stl',T,F,A,'mode','ascii')
+
+
 
 %% TEST STL
 
