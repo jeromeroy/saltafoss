@@ -27,10 +27,11 @@ ff = transpose(f(1:950,:))./x;
 aa = a(1:950,:)*15;
 tt = transpose(t);
 
-% grab every 2nd element
-F = ff(:,1:5:end);
-A = aa(1:5:end,1:5:end);
-T = tt(:,1:5:end);
+% grab every c element
+c = 15; %how much should i compress?
+F = ff(:,1:c:end);
+A = aa(1:c:end,1:c:end);
+T = tt(:,1:c:end);
 
 % Write ascii STL from gridded data
 %stlwrite('test.stl',tt,ff,aa,'mode','ascii')
