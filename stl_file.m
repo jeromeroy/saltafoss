@@ -2,11 +2,12 @@
 % Desciption:   This code exports audio files in STL files using 3D graphs
 % Author:       Jérôme Roy
 % Date:         10.04.23
-% Update:       19.04.23
+% Update:       25.04.23
 
 clc
 clear all
 
+tic;
 [filename, pathname] = uigetfile('*.*'); %change the extension for other file formats
 fullpath = fullfile(pathname, filename);
 data = importdata(fullpath);
@@ -23,12 +24,12 @@ a = sqrt(p.*f*3);
 %in ratio 2/3
 x = (2/3)*(f(end)/t(end));
 
-ff = transpose(f(1:950,:))./x;
-aa = a(1:950,:)*15;
+ff = transpose(f(1:800,:))./x;
+aa = a(1:800,:)*400;
 tt = transpose(t);
 
 % grab every c element
-c = 15; %how much should i compress?
+c = 2; %how much should i compress?
 F = ff(:,1:c:end);
 A = aa(1:c:end,1:c:end);
 T = tt(:,1:c:end);
@@ -36,7 +37,7 @@ T = tt(:,1:c:end);
 % Write ascii STL from gridded data
 %stlwrite('test.stl',tt,ff,aa,'mode','ascii')
 stlwrite('test_comp.stl',T,F,A,'mode','ascii')
-
+toc;
 
 
 %% TEST STL
