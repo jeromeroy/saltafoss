@@ -8,41 +8,35 @@ clc
 clear all
 
 tic;
-[filename, pathname] = uigetfile('*.*'); %change the extension for other file formats
-fullpath = fullfile(pathname, filename);
-data = importdata(fullpath);
+folder_path = uigetdir(); % select folder containing mp3 files
+file_list = dir(fullfile(folder_path, '*.mp3'));
 
-[y, Fs] = audioread(filename);
-
-y = mean(y,2); % convert stereo to mono
-[p,f,t] = pspectrum(y,Fs,'spectrogram');
-a = sqrt(p.*f*3);
-%select first 789 elements of a to make it in ratio 3/2
-
-%TODO: Remove ratio limiter of 526, instead divide highest value in freq by
-%highest value in time. to obtain a square. then rethink how to calibrate
-%in ratio 2/3
-x = (2/3)*(f(end)/t(end));
-
-ff = transpose(f(1:800,:))./x;
-aa = a(1:800,:)*400;
-tt = transpose(t);
-
-% grab every c element
-c = 2; %how much should i compress?
-F = ff(:,1:c:end);
-A = aa(1:c:end,1:c:end);
-T = tt(:,1:c:end);
-
-% Write ascii STL from gridded data
-%stlwrite('test.stl',tt,ff,aa,'mode','ascii')
-stlwrite('test_comp.stl',T,F,A,'mode','ascii')
+for i = 1:length(file_list)
+    % load audio file
+    filename = file_list(i).name;
+    fullpath = fullfile(folder_path, filename);
+    [y, Fs] = audioread(fullpath);
+    y = mean(y,2); % convert stereo to mono
+    
+    % calculate spectrogram
+    [p,f,t] = pspectrum(y,Fs,'spectrogram');
+    a = sqrt(p.*f*3);
+    
+    % calculate scaling factor to make frequency and time axes roughly equal
+    x = 2/3*(f(end)/t(end));
+    
+    % select frequency range and compress data
+    ff = transpose(f(1:800,:))./x;
+    aa = a(1:800,:)*400;
+    c = 2; % how much should i compress?
+    F = ff(:,1:c:end);
+    A = aa(1:c:end,1:c:end);
+    
+    % create time axis
+    T = transpose(linspace(0, length(y)/Fs, size(A,2)));
+    
+    % write ascii STL file
+    stl_filename = [filename(1:end-4) '.stl'];
+    stlwrite(fullfile(folder_path, stl_filename),T,F,A,'mode','ascii')
+end
 toc;
-
-
-%% TEST STL
-
-% Write ascii STL from gridded data
-[X,Y] = deal(1:50);             % Create grid reference
-Z = peaks(50);                  % Create grid height
-stlwrite('test.stl',X,Y,Z,'mode','ascii')
