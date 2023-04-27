@@ -27,8 +27,8 @@ for i = 1:length(file_list)
     
     % select frequency range and compress data
     ff = transpose(f(1:800,:))./x; 
-    aa = a(1:800,:)*200;
-    c = 10; % how much should i "compress" the mesh?
+    aa = a(1:800,:)*400;
+    c = 1; % how much should i "compress" the mesh?
     F = ff(:,1:c:end);
     A = aa(1:c:end,1:c:end);
 
@@ -43,7 +43,6 @@ for i = 1:length(file_list)
 
     for i = 1:4
         for g = 1:3
-            tic;
             
             X = F(:,length_F*(i-1)+1:1:length_F*i-1);
             Y = T(length_T*(g-1)+1:1:length_T*g-1,:);
@@ -51,7 +50,7 @@ for i = 1:length(file_list)
 
             stl_filename = sprintf('%s_%d_%d.stl', input_text, i, g);
             stlwrite(fullfile(folder_path, stl_filename),Y,X,Z,'mode','ascii')
-            toc;
+            
         end
     end
 
