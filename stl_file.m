@@ -2,7 +2,7 @@
 % Desciption:   This code exports audio files into STL files using 3D graphs
 % Author:       Jérôme Roy
 % Date:         10.04.23
-% Update:       25.04.23
+% Update:       26.04.23
 
 clc
 clear all
