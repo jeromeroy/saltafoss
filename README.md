@@ -13,4 +13,4 @@ Code imports audio files, calculates the spectrogram and exportsa a STL file rea
 Execute the code in the main folder and select a folder containing the mp3 files that need to be converted. 
 
 
-![My Image](example_STL.png)
+![My Image](docu/example_STL.png)
