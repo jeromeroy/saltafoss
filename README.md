@@ -12,5 +12,5 @@ Code imports audio files, calculates the spectrogram and exportsa a STL file rea
 
 Execute the code in the main folder and select a folder containing the mp3 files that need to be converted. 
 
-
-![My Image](docu/example_STL.png)
+The following figure shows an export of an audio file, analized and sliced into 12 individual parts. The 12 tiles are created for better 3D-printing results.
+![My Image](docu/example_STL.png "Test export")
