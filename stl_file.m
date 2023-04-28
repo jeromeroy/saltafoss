@@ -2,14 +2,14 @@
 % Desciption:   This code exports audio files into STL files using 3D graphs
 % Author:       Jérôme Roy
 % Date:         10.04.23
-% Update:       26.04.23
+% Update:       28.04.23
 
 clc
 clear all
 
 tic;
 folder_path = uigetdir(); % select folder containing mp3 files
-file_list = dir(fullfile(folder_path, '*.mp3'));
+file_list = dir(fullfile(folder_path, '*.m4a'));
 
 for i = 1:length(file_list)
     % load audio file
@@ -17,26 +17,28 @@ for i = 1:length(file_list)
     fullpath = fullfile(folder_path, filename);
     [y, Fs] = audioread(fullpath);
     y = mean(y,2); % convert stereo to mono
+    %y = highpass(y,3000,Fs)
     
     % calculate spectrogram
     [p,f,t] = pspectrum(y,Fs,'spectrogram');
     a = sqrt(p.*f*3);
     
-    % calculate scaling factor to print in 2/3 ratio (20x30cm)
-    x = 2/3*(f(end)/t(end));
-    
     % select frequency range and compress data
-    ff = transpose(f(1:800,:))./x; 
-    aa = a(1:800,:)*400;
-    c = 1; % how much should i "compress" the mesh?
+    c = 1;      % "compression" of the mesh
+    HC = 800;   % High-Cut frequencies
+
+
+    % calculate scaling factor to print in 2/3 ratio (20x30cm)
+    x = (2/3)*(f(HC)/t(end));
+   
+    ff = transpose(f(1:HC,:)); 
+    aa = a(1:HC,:)*400;
     F = ff(:,1:c:end);
     A = aa(1:c:end,1:c:end);
-
-    % create time axis
-    T = transpose(linspace(0, length(y)/Fs, size(A,2)));
+    T = t*x;
     
     % divide the area in 12 tiles, arranged in a 4x3 matrix
-
+    ratio = length(F)/length(T);
     length_F = length(F)/4;
     length_T = length(T)/3;
     input_text = "piastrella"; % Replace with your desired text input
