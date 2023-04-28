@@ -1,0 +1,11 @@
+The Saltafoss code is a MATLAB script that exports audio files into STL files using 3D graphs. It allows users to select a folder containing audio files and convert them to STL files that can be used for 3D printing.
+
+The script starts by clearing the workspace and selecting a folder containing audio files using the "uigetdir()" function. It then identifies all audio files with the ".m4a" extension in the selected folder using the "dir()" function.
+
+For each audio file, the script loads the file and converts it to mono. It then calculates the spectrogram using the "pspectrum()" function, and selects a frequency range while compressing the data to reduce the size of the output.
+
+The script then calculates a scaling factor to print the STL files in a 2/3 ratio (20x30cm) and divides the area into 12 tiles arranged in a 4x3 matrix. The user can replace the default text input "piastrella" with their desired text input.
+
+Finally, the script generates STL files for each tile using the "stlwrite()" function, with each file named according to the selected text input and the tile's position in the matrix. The files are saved in the selected folder.
+
+The code includes comments to explain each section and the purpose of each variable. The code was authored by Jérôme Roy and was last updated on 28.04.23.
