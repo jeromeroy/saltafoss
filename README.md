@@ -11,3 +11,6 @@ Two images are then exported, one figure with linear scales and one with logarit
 Code imports audio files, calculates the spectrogram and exportsa a STL file ready for 3D printing with the Frequency, Time and Amplitude axis. 
 
 Execute the code in the main folder and select a folder containing the mp3 files that need to be converted. 
+
+
+![My Image](example_STL.png)
