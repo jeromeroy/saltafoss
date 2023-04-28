@@ -17,28 +17,29 @@ for i = 1:length(file_list)
     fullpath = fullfile(folder_path, filename);
     [y, Fs] = audioread(fullpath);
     y = mean(y,2); % convert stereo to mono
-    %y = highpass(y,3000,Fs)
+    %y = highpass(y,150,Fs)
     
     % calculate spectrogram
     [p,f,t] = pspectrum(y,Fs,'spectrogram');
     a = sqrt(p.*f*3);
     
     % select frequency range and compress data
-    c = 1;      % "compression" of the mesh
-    HC = 800;   % High-Cut frequencies
+    c = 1;          % "compression" of the mesh
+    HC = 800;       % High-Cut frequencies
+    amplitude = 500;    % Amplitude multiplicator
 
 
     % calculate scaling factor to print in 2/3 ratio (20x30cm)
-    x = (2/3)*(f(HC)/t(end));
-   
     ff = transpose(f(1:HC,:)); 
-    aa = a(1:HC,:)*400;
+    aa = a(1:HC,:)*amplitude;
+
     F = ff(:,1:c:end);
     A = aa(1:c:end,1:c:end);
-    T = t*x;
+    x = (F(end)*(1/2))/t(end,:);
+    T = t.*x;
     
     % divide the area in 12 tiles, arranged in a 4x3 matrix
-    ratio = length(F)/length(T);
+    ratio = length(F(end))/length(T(end));
     length_F = length(F)/4;
     length_T = length(T)/3;
     input_text = "piastrella"; % Replace with your desired text input
@@ -58,3 +59,5 @@ for i = 1:length(file_list)
 
 end
 toc;
+
+
