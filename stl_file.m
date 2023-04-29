@@ -9,7 +9,7 @@ clear all
 
 tic;
 folder_path = uigetdir(); % select folder containing mp3 files
-file_list = dir(fullfile(folder_path, '*.m4a'));
+file_list = dir(fullfile(folder_path, '*.mp3'));
 
 for i = 1:length(file_list)
     % load audio file
