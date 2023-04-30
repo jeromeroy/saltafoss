@@ -3,13 +3,17 @@
 % Author:       Jérôme Roy
 % Date:         10.04.23
 % Update:       28.04.23
+clc
+clear all
 
+
+%% SECTION 1:   READ AUDIO FILE & SAVE TO .MAT FILE
 clc
 clear all
 
 tic;
-folder_path = uigetdir(); % select folder containing mp3 files
-file_list = dir(fullfile(folder_path, '*.mp3'));
+folder_path = uigetdir();
+file_list = dir(fullfile(folder_path,'*.aif'));
 
 for i = 1:length(file_list)
     % load audio file
@@ -17,12 +21,29 @@ for i = 1:length(file_list)
     fullpath = fullfile(folder_path, filename);
     [y, Fs] = audioread(fullpath);
     y = mean(y,2); % convert stereo to mono
-    %y = highpass(y,150,Fs)
-    
+    mat_filename = sprintf('%s.mat', filename);
+    save(fullfile(folder_path, mat_filename),"y","Fs",'-v7.3')
+end
+toc;
+%% SECTION 2:   LOAD .MAT FILE INTO WORKSPACE
+tic;
+folder_path = uigetdir();
+file_list = dir(fullfile(folder_path,'*.mat'));
+
+for i = 1:length(file_list)
+    filename = file_list(i).name;
+    fullpath = fullfile(folder_path, filename);
+    load(fullpath)
+end
+toc;
+%% SECTION 3:   CALCULATE SPECTROGRAM
+tic;
     % calculate spectrogram
     [p,f,t] = pspectrum(y,Fs,'spectrogram');
     a = sqrt(p.*f*3);
-    
+toc;
+%% SECTION 4:   EXPORT SPECTROGRAM (GENERATE STL)
+tic; 
     % select frequency range and compress data
     c = 1;          % "compression" of the mesh
     HC = 800;       % High-Cut frequencies
@@ -56,8 +77,5 @@ for i = 1:length(file_list)
             
         end
     end
-
-end
 toc;
-
 
