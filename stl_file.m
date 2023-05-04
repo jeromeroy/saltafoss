@@ -2,7 +2,7 @@
 % Desciption:   This code exports audio files into STL files using 3D graphs
 % Author:       Jérôme Roy
 % Date:         10.04.23
-% Update:       28.04.23
+% Update:       04.05.23
 clc
 clear all
 
@@ -13,7 +13,7 @@ clear all
 
 tic;
 folder_path = uigetdir();
-file_list = dir(fullfile(folder_path,'*.aif'));
+file_list = dir(fullfile(folder_path,'*.mp3'));
 
 for i = 1:length(file_list)
     % load audio file
@@ -27,6 +27,8 @@ end
 toc;
 %% SECTION 2:   LOAD .MAT FILE INTO WORKSPACE
 tic;
+clc
+clear all
 folder_path = uigetdir();
 file_list = dir(fullfile(folder_path,'*.mat'));
 
@@ -39,18 +41,19 @@ toc;
 %% SECTION 3:   CALCULATE SPECTROGRAM
 tic;
     % calculate spectrogram
-    [p,f,t] = pspectrum(y,Fs,'spectrogram');
-    a = sqrt(p.*f*3);
+    [p,f,t] = pspectrum(y,Fs,'spectrogram','Leakage',0.1);
 toc;
+
 %% SECTION 4:   EXPORT SPECTROGRAM (GENERATE STL)
 tic; 
     % select frequency range and compress data
     c = 1;          % "compression" of the mesh
-    HC = 800;       % High-Cut frequencies
-    amplitude = 500;    % Amplitude multiplicator
+    HC = 885;       % High-Cut frequencies
+    amplitude = 800;    % Amplitude multiplicator
 
 
     % calculate scaling factor to print in 2/3 ratio (20x30cm)
+    a = sqrt(p.*f*3);
     ff = transpose(f(1:HC,:)); 
     aa = a(1:HC,:)*amplitude;
 
@@ -78,4 +81,3 @@ tic;
         end
     end
 toc;
-
