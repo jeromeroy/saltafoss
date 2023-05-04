@@ -5,8 +5,6 @@
 % Update:       04.05.23
 
 
-% TEST COMMIT
-
 %% SECTION 1:   READ AUDIO FILE & SAVE TO .MAT FILE
 clc
 clear all
@@ -43,6 +41,7 @@ tic;
     % calculate spectrogram
     [p,f,t] = pspectrum(y,Fs,'spectrogram','Leakage',0.1);
 toc;
+
 
 %% SECTION 4:   EXPORT SPECTROGRAM (GENERATE STL)
 tic; 
