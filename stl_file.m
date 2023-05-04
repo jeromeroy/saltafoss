@@ -3,9 +3,9 @@
 % Author:       Jérôme Roy
 % Date:         10.04.23
 % Update:       04.05.23
-clc
-clear all
 
+
+% TEST COMMIT
 
 %% SECTION 1:   READ AUDIO FILE & SAVE TO .MAT FILE
 clc
